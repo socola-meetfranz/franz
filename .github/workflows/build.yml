@@ -10,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           # node-version-file: '.nvmrc'
-          version: 14.18.1
+          node-version: 14.18.1
           cache: 'npm'
       - run: npx lerna bootstrap 
       - run: npm run build:packages
