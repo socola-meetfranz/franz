@@ -58,7 +58,7 @@ jobs:
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws_bucket: ${{ secrets.S3_BUCKET }}
           source_dir: out
-          destination_dir: ${GITHUB_RUN_NUMBER}
+          destination_dir: ${{ GITHUB_RUN_NUMBER }}
 
     env:
       GH_TOKEN: ${{ secrets.github_token }}
