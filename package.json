@@ -31,8 +31,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "reformat-files": "./node_modules/.bin/prettier --ignore-path .eslintignore --write --require-pragma \"**/*.{js,jsx,scss}\"",
     "packages": "npx lerna publish --no-git-tag-version",
-    "uidev": "cd uidev && webpack-dev-server",
-    "postinstall": "npx lerna run prepare"
+    "uidev": "cd uidev && webpack-dev-server"
   },
   "keywords": [],
   "author": "Stefan Malzner <stefan@adlk.io>",
