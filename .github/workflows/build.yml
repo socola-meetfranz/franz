@@ -41,10 +41,6 @@ jobs:
       - name: Download build artifact
         uses: actions/download-artifact@v3
 
-      - name: Windows setup preps
-        run: npm config set python python2.7
-        if: ${{ matrix.os == 'windows-latest' }}
-
       - run: npm install
 
       - name: Package binary
@@ -66,7 +62,7 @@ jobs:
 
     env:
       GH_TOKEN: ${{ secrets.github_token }}
-      CSC_LINK: ${{ secrets.CSC_LINK }}
+      CSC_LINK: ${{ matrix.os == 'windows-2019' && secrets.CSC_WINDOWS_LINK || secrets.CSC_LINK }}
       CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
       APPLEID: ${{ secrets.APPLEID }}
       APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
