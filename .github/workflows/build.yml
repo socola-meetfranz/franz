@@ -3,38 +3,54 @@ name: Build/release
 on: push
 
 jobs:
-  release:
-    runs-on: ${{ matrix.os }}
-
-    # Platforms to build on/for
-    strategy:
-      matrix:
-        # os: [macos-latest, ubuntu-latest, windows-latest]
-        os: [ubuntu-latest]
-
+  build: 
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - name: Do your magic
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.13
-        env:
-          # macOS notarization API key
-          GH_TOKEN: ${{ secrets.github_token }}
-          CSC_LINK: ${{ secrets.CSC_LINK }}
-          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
-          APPLEID: ${{ secrets.APPLEID }}
-          APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
-
-      - run: npx lerna bootstrap
+          cache: 'npm'
+      - run: npx lerna bootstrap 
       - run: npm run build
-      
-      - name: Upload to S3
-        uses: shallwefootball/s3-upload-action@master
+      - uses: actions/upload-artifact@v3
         with:
-          aws_key_id: ${{ secrets.AWS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
-          aws_bucket: ${{ secrets.AWS_BUCKET }}
-          source_dir: out
-          destination_dir: $GITHUB_RUN_NUMBER
+          name: build
+          path: build/
+
+
+  # release:
+  #   runs-on: ${{ matrix.os }}
+
+  #   # Platforms to build on/for
+  #   strategy:
+  #     matrix:
+  #       # os: [macos-latest, ubuntu-latest, windows-latest]
+  #       os: [ubuntu-latest]
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v1
+  #     - name: Do your magic
+  #       with:
+  #         node-version: 16.13
+  #       env:
+  #         # macOS notarization API key
+  #         GH_TOKEN: ${{ secrets.github_token }}
+  #         CSC_LINK: ${{ secrets.CSC_LINK }}
+  #         CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+  #         APPLEID: ${{ secrets.APPLEID }}
+  #         APPLEIDPASS: ${{ secrets.APPLEIDPASS }}
+
+  #     - run: npx lerna bootstrap
+  #     - run: npm run build
+      
+  #     - name: Upload to S3
+  #       uses: shallwefootball/s3-upload-action@master
+  #       with:
+  #         aws_key_id: ${{ secrets.AWS_KEY_ID }}
+  #         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY}}
+  #         aws_bucket: ${{ secrets.AWS_BUCKET }}
+  #         source_dir: out
+  #         destination_dir: $GITHUB_RUN_NUMBER
         
