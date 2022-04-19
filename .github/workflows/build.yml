@@ -26,7 +26,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [windows-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -37,6 +38,10 @@ jobs:
 
       - name: Download build artifact
         uses: actions/download-artifact@v3
+
+      - name: Windows setup preps
+        run: npm config set python python2.7
+        if: ${{ matrix.os == 'windows-latest' }}
 
       - run: npm install
 
