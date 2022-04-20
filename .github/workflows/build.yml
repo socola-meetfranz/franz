@@ -47,41 +47,48 @@ jobs:
       # Uploading latest.yml, latest-mac.yml or latest-linux.yml
       - name: Uploading Build Artifact Update Info
         uses: actions/upload-artifact@v3
+        if: startsWith(matrix.os, "windows")
         with:
-          path: /out/latest*.yml
+          path: out/latest*.yml
 
       # Uploading Windows specific artifacts
       - name: Uploading Windows Build .exe
         uses: actions/upload-artifact@v3
+        if: startsWith(matrix.os, "windows")
         with:
-          path: /out/Franz*.exe
+          path: out/Franz*.exe
 
       # Uploading macOS specific artifacts
       - name: Uploading macOS Build .dmg
         uses: actions/upload-artifact@v3
+        if: startsWith(matrix.os, "macos")
         with:
-          path: /out/Franz-!(*arm64).dmg
+          path: out/Franz-!(*arm64).dmg
 
       - name: Uploading macOS arm64 Build .dmg
         uses: actions/upload-artifact@v3
+        if: startsWith(matrix.os, "macos")
         with:
-          path: /out/Franz-*-arm64.dmg
+          path: out/Franz-*-arm64.dmg
 
       # Uploading Linux specific artifacts
       - name: Uploading Linux Build .AppImage
         uses: actions/upload-artifact@v3
+        if: startsWith(matrix.os, "linux")
         with:
-          path: /out/Franz*.AppImage
+          path: out/Franz*.AppImage
 
       - name: Uploading Linux Build .deb
         uses: actions/upload-artifact@v3
+        if: startsWith(matrix.os, "linux")
         with:
-          path: /out/franz*.deb
+          path: out/franz*.deb
 
       - name: Uploading Linux Build .tar.gz
         uses: actions/upload-artifact@v3
+        if: startsWith(matrix.os, "linux")
         with:
-          path: /out/franz*.tar.gz
+          path: out/franz*.tar.gz
 
       # - name: Upload to S3
       #   uses: shallwefootball/s3-upload-action@master
