@@ -3,7 +3,7 @@ import { ServiceLimitStore } from './store';
 
 const debug = require('debug')('Franz:feature:serviceLimit');
 
-export const DEFAULT_SERVICE_LIMIT = 3;
+export const DEFAULT_SERVICE_LIMIT = 1000;
 
 let store = null;
 
@@ -18,6 +18,7 @@ export default function initServiceLimit(stores, actions) {
       features.features.isServiceLimitEnabled
     ),
     (isEnabled) => {
+      isEnabled = false;
       if (isEnabled) {
         debug('Initializing `serviceLimit` feature');
         store = serviceLimitStore.start(stores, actions);

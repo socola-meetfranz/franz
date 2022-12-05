@@ -6,6 +6,7 @@ import {
   shell,
   ipcMain,
   dialog,
+  session,
 } from 'electron';
 
 // import isDevMode from 'electron-is-dev';
@@ -200,6 +201,33 @@ const createWindow = () => {
     },
   });
 
+  // (async function () {
+  //   const recipeExtensionsDirectory = path.join(app.getPath('userData'), 'recipes', 'extensions');
+  //   if (fs.existsSync(recipeExtensionsDirectory) === false) {
+  //     return;
+  //   }
+  //   const parentDir = recipeExtensionsDirectory;
+  //   const childs = fs.readdirSync(parentDir);
+  //   const parrentLstat = await fs.lstat(parentDir);
+  //
+  //   if (parrentLstat.isDirectory() === false) {
+  //     return;
+  //   }
+  //
+  //   for (const child of childs) {
+  //     const pathChild = path.join(parentDir, child);
+  //     // eslint-disable-next-line no-await-in-loop
+  //     const childLstat = await fs.lstat(pathChild);
+  //     if (childLstat.isDirectory() === false) {
+  //       // eslint-disable-next-line no-continue
+  //       continue;
+  //     }
+  //
+  //     // eslint-disable-next-line no-await-in-loop
+  //     const ext = await session.defaultSession.loadExtension(pathChild);
+  //   }
+  // }()).catch(console.error);
+
   remoteMain.enable(mainWindow.webContents);
 
   mainWindow.webContents.on('did-finish-load', () => {
@@ -390,6 +418,13 @@ app.on('ready', () => {
       }
     });
   }
+
+  app.mainWindow.webContents.session.loadExtension('C:\\franz-extensions\\chat-plus-plus-for-chatwork')
+    .then(x => {
+      console.log({x})
+    })
+    .catch(y => console.log({y}))
+  ;
 });
 
 // This is the worst possible implementation as the webview.webContents based callback doesn't work 🖕

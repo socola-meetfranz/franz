@@ -169,10 +169,12 @@ export default class UserStore extends Store {
   }
 
   @computed get isPremium() {
+    return true;
     return !!this.data.isPremium;
   }
 
   @computed get isPremiumOverride() {
+    return true;
     return ((!this.team || !this.team.plan) && this.isPremium) || (this.team && this.team.state === 'expired' && this.isPremium);
   }
 

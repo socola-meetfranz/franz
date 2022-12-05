@@ -63,6 +63,7 @@ export default function init(stores) {
       && !stores.user.data.isPremium
     ),
     (isEnabled) => {
+      isEnabled = false;
       if (isEnabled) {
         debug('Enabling `delayApp` feature');
 
